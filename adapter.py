@@ -1,9 +1,7 @@
 """ScaleBFM M: original CPU network, author whole-body mode and input history."""
 import json
 from pathlib import Path
-import xml.etree.ElementTree as ET
 
-import mujoco
 import numpy as np
 from scipy.spatial.transform import Rotation
 import torch
@@ -32,16 +30,6 @@ class ScaleBFM:
         self.names = self.metadata['joint_names']
         self.mode = torch.tensor([self.config['control_mode']], dtype=torch.long)
         self.offsets = torch.tensor(self.metadata['future_idx'], dtype=torch.long)[None, :, None]
-        # FK-only author model: preserve all body/joint transforms and inertials.
-        tree = ET.parse(paths['robot']).getroot()
-        for parent in tree.iter():
-            for child in list(parent):
-                if child.tag == 'mesh' or (child.tag == 'geom' and child.get('mesh')):
-                    parent.remove(child)
-        self.fk = mujoco.MjModel.from_xml_string(ET.tostring(tree, encoding='unicode'))
-        self.fk_data = mujoco.MjData(self.fk)
-        self.qadr = [int(self.fk.joint(n).qposadr[0]) for n in self.names]
-        self.body_ids = [self.fk.body(n).id for n in self.metadata['selected_body_names']]
 
     def sample(self, state):
         rotation = Rotation.from_quat(state.root_orientation_xyzw)
@@ -67,12 +55,27 @@ class ScaleBFM:
     def reference_bodies(self, frame):
         key = frame.source_time_s
         if key not in self.reference_cache:
-            self.fk_data.qpos[:3] = frame.root_position_world_m
-            self.fk_data.qpos[3:7] = np.asarray(frame.root_orientation_xyzw)[[3, 0, 1, 2]]
-            self.fk_data.qpos[self.qadr] = np.asarray(frame.joint_position_rad)[self.order]
-            mujoco.mj_forward(self.fk, self.fk_data)
-            self.reference_cache[key] = (self.fk_data.xpos[self.body_ids].copy(),
-                                         self.fk_data.xquat[self.body_ids].copy())
+            # Preserve the author's float32 quaternion FK operation order.
+            model = self.policy
+            q = torch.tensor(np.asarray(frame.joint_position_rad)[self.order], dtype=torch.float32)
+            half = q[model.lab_to_xml_joint_indices, None] / 2
+            joint_rotation = torch.cat([torch.cos(half), model.joint_axis * torch.sin(half)], -1)
+            count = len(model.parent_indices)
+            positions = torch.zeros(count, 3)
+            rotations = torch.zeros(count, 4)
+            rotations[:, 0] = 1
+            positions[0] = torch.tensor(frame.root_position_world_m)
+            rotations[0] = torch.tensor(np.asarray(frame.root_orientation_xyzw)[[3, 0, 1, 2]])
+            for index in range(1, count):
+                parent = model.parent_indices[index]
+                parent_rotation = rotations[parent:parent + 1]
+                positions[index] = positions[parent] + self.native.quat_apply(
+                    parent_rotation, model.local_translation[index - 1:index])[0]
+                local = self.native.quat_mul(model.local_rotation[index - 1:index],
+                                            joint_rotation[index - 1:index])
+                rotations[index] = self.native.quat_mul(parent_rotation, local)[0]
+            selected = model.selected_link_indices
+            self.reference_cache[key] = (positions[selected].numpy(), rotations[selected].numpy())
         return self.reference_cache[key]
 
     def observations(self, state, reference):

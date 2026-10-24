@@ -8,7 +8,7 @@ from scipy.spatial.transform import Rotation as R
 A=Path(__file__).resolve().parent
 parser=argparse.ArgumentParser()
 for name in ['source','weights','metadata','mode-table','output']:parser.add_argument('--'+name,type=Path,required=True)
-args=parser.parse_args();S=args.source
+args=parser.parse_args();S=args.source.resolve()
 pins=json.loads((A/'native-sources.json').read_text())
 for name,digest in pins['files'].items():assert hashlib.sha256((S/name).read_bytes()).hexdigest()==digest,name
 sys.path.insert(0,str(A))
@@ -99,6 +99,6 @@ with torch.inference_mode():
    command=policy.act(state,refs);policy.observations=original
    compare('action',policy.last,action);compare('motor_target',np.asarray(command.joint_position_target_rad),target[0].numpy()[inverse])
    env.action.copy_(action)
-report={'status':'passed' if max(errors.values())<2e-5 else 'failed','cases':160,'resets':4,'max_abs_errors':errors,'tolerance':2e-5,'control_mode':7,'reference_forcing':True,'checkpoint_sha256':runtime['weights_sha256'],'source_commit':runtime['source_commit'],'scope':'Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; separate author Torch FK vs adapter MuJoCo FK; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate.'}
+report={'status':'passed' if max(errors.values())<2e-5 else 'failed','cases':160,'resets':4,'max_abs_errors':errors,'tolerance':2e-5,'control_mode':7,'reference_forcing':True,'checkpoint_sha256':runtime['weights_sha256'],'source_commit':runtime['source_commit'],'scope':'Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; independent author-compatible float32 FK implementations; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate.'}
 args.output.parent.mkdir(parents=True,exist_ok=True)
 args.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2));assert report['status']=='passed'

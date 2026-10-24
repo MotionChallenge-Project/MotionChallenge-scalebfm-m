@@ -6,7 +6,7 @@
   "upstream": "https://github.com/zengweishuai/ScaleBFM",
   "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
-  "author_inference_review": "160 matched-input cases and4 resets passed CPU original author network/export/ScaleBridge comparison on macOS. Linux and full-suite verification are separate.",
+  "author_inference_review": "160 inputs and4 resets passed exactly on macOS after matching original float32 FK. Linux recheck pending. Fixed2e-5 tolerance unchanged; initial MuJoCo-FK mismatch retained in validation/diagnostics.",
   "inference_validation": "validation/native-parity.json",
   "benchmark_physics": "shared G1 canonical profile, not author training simulator",
   "checkpoint_origin": {
@@ -25,7 +25,7 @@
     "backend": "Original author PyTorch network and export functions on CPU. TensorRT/CUDA equivalence is not implied. Author source and metadata are downloaded at pinned revisions with SHA256 validation.",
     "mode": "Author default whole-body control mode7, reference_forcing=True. Reference root position is substituted only in observation buffers after initialization; simulator state is never changed.",
     "history": "Three chronological frames, initialized by broadcasting actual initial state; zero last actions. Future reference offsets0..5 at50Hz.",
-    "reference": "Original author XML FK from canonical root/joint reference, input-only; no change to dataset or scoring.",
+    "reference": "Original author XML and float32 quaternion FK operation order applied to canonical root/joint reference, input-only. No change to dataset or scoring.",
     "initialization": "Core canonical initial state replaces author interactive calibration; same author reset history rules. First reference root/heading already align with initial actual root.",
     "action": "Original float32 network PD targets and author gains. Core motor limits, failure and scoring unchanged."
   }
