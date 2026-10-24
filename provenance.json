@@ -6,7 +6,7 @@
   "upstream": "https://github.com/zengweishuai/ScaleBFM",
   "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
-  "author_inference_review": "160 matched inputs and4 resets passed with zero measured difference on both macOS and Linux using the original float32 reference FK operation order. Fixed2e-5 tolerance unchanged; initial MuJoCo-FK mismatch retained in validation/diagnostics. TensorRT/CUDA equivalence and full-suite verification are separate.",
+  "author_inference_review": "Numerical comparison against pinned author inference: validation/native-parity.json",
   "inference_validation": "validation/native-parity.json",
   "benchmark_physics": "shared G1 canonical profile, not author training simulator",
   "checkpoint_origin": {

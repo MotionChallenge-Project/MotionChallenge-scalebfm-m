@@ -17,6 +17,8 @@ class ScaleBFM:
         if sha256_file(root / 'policy.json') != runtime['inference_config_sha256']:
             raise ValueError('ScaleBFM configuration hash mismatch')
         self.config = json.loads((root / 'policy.json').read_text())
+        if not self.config['reference_forcing']:
+            raise ValueError('ScaleBFM requires reference-only root forcing')
         weights = root / runtime['weights']
         if sha256_file(weights) != runtime['weights_sha256']:
             raise ValueError('ScaleBFM weight hash mismatch')
@@ -31,10 +33,10 @@ class ScaleBFM:
         self.mode = torch.tensor([self.config['control_mode']], dtype=torch.long)
         self.offsets = torch.tensor(self.metadata['future_idx'], dtype=torch.long)[None, :, None]
 
-    def sample(self, state):
+    def sample(self, state, reference_root):
         rotation = Rotation.from_quat(state.root_orientation_xyzw)
         return {
-            'root_pos_buffer': np.asarray(state.root_position_world_m),
+            'root_pos_buffer': np.asarray(reference_root),
             'root_quat_wxyz_buffer': np.asarray(state.root_orientation_xyzw)[[3, 0, 1, 2]],
             'base_ang_vel_buffer': rotation.inv().apply(state.root_angular_velocity_world_rad_s),
             'dof_pos_buffer': np.asarray(state.joint_position_rad)[self.order],
@@ -46,9 +48,11 @@ class ScaleBFM:
         self.inverse = [self.names.index(n) for n in state.joint_names]
         count = self.metadata['history_buffer_size']
         self.buffers = {k: torch.tensor(v, dtype=torch.float32)[None, None].repeat(1, count, 1)
-                        for k, v in self.sample(state).items()}
+                        for k, v in self.sample(state, reference[0].root_position_world_m).items()}
         self.buffers['action_buffer'] = torch.zeros(1, count, 29)
         self.last = torch.zeros(1, 29)
+        # Reference-only initialization: extend author reference forcing to reset.
+        # No robot position is observed or integrated.
         self.first = True
         self.reference_cache = {}
 
@@ -80,7 +84,7 @@ class ScaleBFM:
 
     def observations(self, state, reference):
         if not self.first:
-            for key, value in self.sample(state).items():
+            for key, value in self.sample(state, reference[0].root_position_world_m).items():
                 self.buffers[key] = torch.roll(self.buffers[key], -1, 1)
                 self.buffers[key][:, -1] = torch.tensor(value, dtype=torch.float32)
             self.buffers['action_buffer'] = torch.roll(self.buffers['action_buffer'], -1, 1)

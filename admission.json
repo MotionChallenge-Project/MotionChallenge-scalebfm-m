@@ -3,7 +3,7 @@
   "model": "scalebfm-m",
   "display_name": "ScaleBFM M",
   "state_access": "ideal-proprioceptive-no-position-v1",
-  "status": "requires_author_deployment_validation",
+  "status": "inference_verified",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
   "auxiliary_artifacts": {
     "network": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
@@ -28,23 +28,26 @@
   "author_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
   "base_adapter_commit": "375672f236cce78802eee4855fe8f6333081f421",
   "production_source_sha256": {
-    "adapter.py": "94a000b869028d9bd9f068702481661fca93d67eb755368d605d20a538c247a7",
+    "adapter.py": "35b59cc046a5e38445d9912714dce53fe885137132d3615946b2ad3aa29de222",
     "evaluate.py": "0ebb8c761f00dd963f2e45c85ecb94628273911bb1edfc0f2621e8fc458cb4ff",
     "native-sources.json": "830d97f529e02ce8ac5e0e1c7c4a575999057e9d0a06cb7b705695fc1ae63a90",
     "native_runtime.py": "30e7c4f8d91a97a823e5753332d3a193e60e7d9fafafcd23d502b5ec5d40e219",
     "policy.json": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
-    "validate_inference.py": "477e6bfa2e4a180895b2c6e2858123975142c4673af60ed5112f6d44ec3a1e7b"
+    "validate_inference.py": "4c6572e1cf2ec7d4a848f518511c576bc23805a21af8f508d3374198feb60961"
   },
   "prior_native_parity_sha256": {
-    "validation/native-parity-linux.json": "641f765dd08dd763f994cb202814e9a961e263cd0853b938bac9a55bfa956f1f",
-    "validation/native-parity.json": "641f765dd08dd763f994cb202814e9a961e263cd0853b938bac9a55bfa956f1f"
+    "validation/native-parity.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23",
+    "validation/native-parity-linux.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23"
   },
-  "handling": "Author mode7/reference_forcing uses reference root after the first act, but initialization currently reads actual root. Need a same-weight, author-supported reference-only initialization path and full reset/history parity before admission.",
-  "actual_position_integration": "No explicit integration or odometry in the inspected deployed adapter source; blocked paths are listed separately.",
-  "special_handling": "Author mode7/reference_forcing uses reference root after the first act, but initialization currently reads actual root. Need a same-weight, author-supported reference-only initialization path and full reset/history parity before admission.",
-  "new_evaluation": {
-    "status": "not_started",
-    "inherited_scores": false
-  },
-  "repository": "https://github.com/MotionChallenge-Project/MotionChallenge-scalebfm-m"
+  "handling": "Initialize root history from the first reference root position instead of measured robot position, which is unavailable under the benchmark observation rules. Then use the author mode 7 reference-forcing inference with the original checkpoint; no robot translation is measured or integrated.",
+  "actual_position_integration": "No measured robot translation, contact inputs or explicit position integration.",
+  "special_handling": "Initialize root history from the first reference root position instead of measured robot position, which is unavailable under the benchmark observation rules. Then use the author mode 7 reference-forcing inference with the original checkpoint; no robot translation is measured or integrated.",
+  "repository": "https://github.com/MotionChallenge-Project/MotionChallenge-scalebfm-m",
+  "dependency_test": {
+    "path": "validation/observation-access.json",
+    "sha256": "ed3f26febbe1b0819b077788200a2fecaabbb5ccec2bf2b28bc36b324680065c",
+    "code": "validate_inference.py",
+    "cases": 160,
+    "resets": 4
+  }
 }

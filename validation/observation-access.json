@@ -1,0 +1,23 @@
+{
+  "model": "scalebfm-m",
+  "status": "passed",
+  "method": "author_deployment_parity",
+  "cases": 160,
+  "resets": 4,
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "validation_script": "validate_inference.py",
+  "tolerance_abs": 2e-05,
+  "max_abs_error": {
+    "reference_fk_position": 0.0,
+    "reference_fk_rotation": 0.0,
+    "history": 0.0,
+    "observation": 0.0,
+    "action": 0.0,
+    "motor_target": 0.0
+  },
+  "handling": "Benchmark adaptation: initialize root history from the first reference root instead of measured robot position, then retain author mode7 reference forcing. The reset differs from the original author code because measured robot position is unavailable under the benchmark rules. Weights, mode7 inference and subsequent reference forcing are unchanged.",
+  "reports": {
+    "native-parity.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23",
+    "native-parity-linux.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23"
+  }
+}

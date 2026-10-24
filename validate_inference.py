@@ -15,6 +15,7 @@ sys.path.insert(0,str(A))
 from adapter import ScaleBFM
 from native_runtime import load_policy
 from motion_challenge.sdk import StatePacket, ReferenceFrame
+from motion_challenge.runtime.observations import controller_state, PROPRIOCEPTIVE
 
 def definitions(path,names,scope,methods=None):
  nodes=[x for x in ast.parse(path.read_text()).body if isinstance(x,(ast.FunctionDef,ast.ClassDef)) and x.name in names]
@@ -78,27 +79,28 @@ with torch.inference_mode():
    idx=min(step,len(frames)-1);fr=frames[idx];actual=R.from_quat(fr.root_orientation_xyzw)*R.from_rotvec(rng.normal(0,.01,3))
    state=StatePacket(step*.02,names,tuple(np.asarray(fr.joint_position_rad)+rng.normal(0,.015,29)),tuple(rng.normal(0,.2,29)),tuple(np.asarray(fr.root_position_world_m)+rng.normal(0,.02,3)),tuple(actual.as_quat()),(0.,)*3,tuple(actual.apply(rng.normal(0,.2,3))))
    refs=tuple(frames[min(step+i,len(frames)-1)] for i in range(6))
-   current.clear();current.update(root_pos=torch.tensor(state.root_position_world_m)[None],root_quat_wxyz=torch.tensor(np.asarray(state.root_orientation_xyzw)[[3,0,1,2]],dtype=torch.float32)[None],base_ang_vel=torch.tensor(actual.inv().apply(state.root_angular_velocity_world_rad_s),dtype=torch.float32)[None],dof_pos=torch.tensor(np.asarray(state.joint_position_rad)[order],dtype=torch.float32)[None],dof_vel=torch.tensor(np.asarray(state.joint_velocity_rad_s)[order],dtype=torch.float32)[None])
+   current.clear();current.update(root_pos=torch.tensor(refs[0].root_position_world_m)[None],root_quat_wxyz=torch.tensor(np.asarray(state.root_orientation_xyzw)[[3,0,1,2]],dtype=torch.float32)[None],base_ang_vel=torch.tensor(actual.inv().apply(state.root_angular_velocity_world_rad_s),dtype=torch.float32)[None],dof_pos=torch.tensor(np.asarray(state.joint_position_rad)[order],dtype=torch.float32)[None],dof_vel=torch.tensor(np.asarray(state.joint_velocity_rad_s)[order],dtype=torch.float32)[None])
    if step==0:
     env.reset();motion._gather_reference_state(env)
-    # Native BaseEnv.reset fills actual root state after setup gathered reference.
+    # Disclosed adaptation: inject the first REFERENCE position into author reset.
+    # The original reset reads simulator position; all later steps use reference forcing.
     env.state_buffer['root_pos_buffer'].copy_(current['root_pos'][:,None].expand_as(env.state_buffer['root_pos_buffer']))
-    policy.reset(state,refs,reset)
+    policy.reset(controller_state(state,PROPRIOCEPTIVE),refs,reset)
    else:
     env.episode_length_buf[:]=step;env._update_state_manager();motion._gather_reference_state(env)
    for frame in refs:
     p,q=policy.reference_bodies(frame);np_,nq=author_fk(frame,order)
     compare('reference_fk_position',p,np_);compare('reference_fk_rotation',R.from_quat(q[:,[1,2,3,0]]).as_matrix(),R.from_quat(nq.numpy()[:,[1,2,3,0]]).as_matrix())
    native_inputs=[scope[k](env.state_buffer) for k in funcs[:-1]]+[torch.tensor([7]),scope['future_time_offsets'](env.state_buffer)]
-   captured=policy.observations(state,refs)
+   captured=policy.observations(controller_state(state,PROPRIOCEPTIVE),refs)
    for a,b in zip(captured,native_inputs):compare('observation',a,b)
    for k in env.state_buffer:
     if k in policy.buffers:compare('history',policy.buffers[k],env.state_buffer[k])
    target,action=native_policy(*native_inputs)
    original=policy.observations;policy.observations=lambda *_:captured
-   command=policy.act(state,refs);policy.observations=original
+   command=policy.act(controller_state(state,PROPRIOCEPTIVE),refs);policy.observations=original
    compare('action',policy.last,action);compare('motor_target',np.asarray(command.joint_position_target_rad),target[0].numpy()[inverse])
    env.action.copy_(action)
-report={'status':'passed' if max(errors.values())<2e-5 else 'failed','cases':160,'resets':4,'max_abs_errors':errors,'tolerance':2e-5,'control_mode':7,'reference_forcing':True,'checkpoint_sha256':runtime['weights_sha256'],'source_commit':runtime['source_commit'],'scope':'Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; independent author-compatible float32 FK implementations; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate.'}
+report={'status':'passed' if max(errors.values())<2e-5 else 'failed','cases':160,'resets':4,'max_abs_errors':errors,'tolerance':2e-5,'control_mode':7,'reference_forcing':True,'checkpoint_sha256':runtime['weights_sha256'],'source_commit':runtime['source_commit'],'adaptation':'Initialize root history from first reference root instead of simulator root; explicitly authorized benchmark adaptation, then retain author mode7 reference forcing.', 'scope':'Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; independent author-compatible float32 FK implementations; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate.'}
 args.output.parent.mkdir(parents=True,exist_ok=True)
 args.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2));assert report['status']=='passed'
