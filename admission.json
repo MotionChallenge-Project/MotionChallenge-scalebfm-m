@@ -1,0 +1,50 @@
+{
+  "schema": "MotionChallenge/observation-admission-v1",
+  "model": "scalebfm-m",
+  "display_name": "ScaleBFM M",
+  "state_access": "ideal-proprioceptive-no-position-v1",
+  "status": "requires_author_deployment_validation",
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "auxiliary_artifacts": {
+    "network": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
+    "export": "cc95d2b63a211219b4e5f6911b6bf790c7a33754b81fc293c7f51c3b5e007154",
+    "robot": "3773fff8e969da20c9c76ad82666a08877be04f94676911d913f33e981149f4c",
+    "metadata": "3024f18136314fade2676e22d6eafb1a8b2befa388da55b0885a53fcb1368d16",
+    "mode_table": "fca11f2399bced32517b51c7f9dcf13c97117ca469b0b32e207d8f7d664fbde9"
+  },
+  "checkpoint_origin": {
+    "author_release_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM",
+    "author_release_label": "Official ScaleBFM Hugging Face release",
+    "kind": "author_file",
+    "kind_label": "Author-released checkpoint",
+    "artifact_page_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/blob/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+    "download_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+    "original_filename": "checkpoint/humanoid_transformer_m/model_22200.pt",
+    "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+    "bytes": 72856655,
+    "verification": "Original raw PyTorch M checkpoint, strict actor/task-embedder loading. No conversion or modified weights; unrelated shared ONNX is not used."
+  },
+  "author_source": "https://github.com/zengweishuai/ScaleBFM",
+  "author_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
+  "base_adapter_commit": "375672f236cce78802eee4855fe8f6333081f421",
+  "production_source_sha256": {
+    "adapter.py": "94a000b869028d9bd9f068702481661fca93d67eb755368d605d20a538c247a7",
+    "evaluate.py": "0ebb8c761f00dd963f2e45c85ecb94628273911bb1edfc0f2621e8fc458cb4ff",
+    "native-sources.json": "830d97f529e02ce8ac5e0e1c7c4a575999057e9d0a06cb7b705695fc1ae63a90",
+    "native_runtime.py": "30e7c4f8d91a97a823e5753332d3a193e60e7d9fafafcd23d502b5ec5d40e219",
+    "policy.json": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
+    "validate_inference.py": "477e6bfa2e4a180895b2c6e2858123975142c4673af60ed5112f6d44ec3a1e7b"
+  },
+  "prior_native_parity_sha256": {
+    "validation/native-parity-linux.json": "641f765dd08dd763f994cb202814e9a961e263cd0853b938bac9a55bfa956f1f",
+    "validation/native-parity.json": "641f765dd08dd763f994cb202814e9a961e263cd0853b938bac9a55bfa956f1f"
+  },
+  "handling": "Author mode7/reference_forcing uses reference root after the first act, but initialization currently reads actual root. Need a same-weight, author-supported reference-only initialization path and full reset/history parity before admission.",
+  "actual_position_integration": "No explicit integration or odometry in the inspected deployed adapter source; blocked paths are listed separately.",
+  "special_handling": "Author mode7/reference_forcing uses reference root after the first act, but initialization currently reads actual root. Need a same-weight, author-supported reference-only initialization path and full reset/history parity before admission.",
+  "new_evaluation": {
+    "status": "not_started",
+    "inherited_scores": false
+  },
+  "repository": "https://github.com/MotionChallenge-Project/MotionChallenge-scalebfm-m"
+}
