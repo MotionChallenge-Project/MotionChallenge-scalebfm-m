@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "cases": 160,
+  "resets": 4,
+  "max_abs_errors": {
+    "reference_fk_position": 4.5649945805414927e-07,
+    "reference_fk_rotation": 1.1138255101815486e-06,
+    "history": 1.6450881958007812e-05,
+    "observation": 1.6450881958007812e-05,
+    "action": 1.6450881958007812e-05,
+    "motor_target": 7.212162017822266e-06
+  },
+  "tolerance": 2e-05,
+  "control_mode": 7,
+  "reference_forcing": true,
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
+  "scope": "Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; separate author Torch FK vs adapter MuJoCo FK; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate."
+}

@@ -1,0 +1,61 @@
+{
+  "id": "scalebfm-m-g1",
+  "entrypoint": "adapter:create",
+  "control_period_s": 0.02,
+  "reference_step_s": 0.02,
+  "reference_steps": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "reference_offsets_s": [
+    0.0,
+    0.02,
+    0.04,
+    0.06,
+    0.08,
+    0.1
+  ],
+  "reference_history_s": 0,
+  "reference_preview_s": 0.1,
+  "state_access": "privileged-state-v0",
+  "action_mode": "joint-pd-feedforward",
+  "inference_config": "policy.json",
+  "inference_config_sha256": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
+  "weights": "checkpoints/model_22200.pt",
+  "weights_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "weights_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+  "artifacts": {
+    "network": {
+      "path": "checkpoints/humanoid_transformer.py",
+      "sha256": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
+      "url": "https://raw.githubusercontent.com/zengweishuai/ScaleBFM/abd6f17c02fe0baabc14709feb8d9ea4959aa621/ScaleTrack/source/my_rsl_rl/my_rsl_rl/networks/humanoid_transformer.py"
+    },
+    "export": {
+      "path": "checkpoints/play_export_check_humanoid_transformer.py",
+      "sha256": "cc95d2b63a211219b4e5f6911b6bf790c7a33754b81fc293c7f51c3b5e007154",
+      "url": "https://raw.githubusercontent.com/zengweishuai/ScaleBFM/abd6f17c02fe0baabc14709feb8d9ea4959aa621/ScaleTrack/scripts/pretrain/rsl_rl/play_export_check_humanoid_transformer.py"
+    },
+    "robot": {
+      "path": "checkpoints/g1_29dof.xml",
+      "sha256": "3773fff8e969da20c9c76ad82666a08877be04f94676911d913f33e981149f4c",
+      "url": "https://raw.githubusercontent.com/zengweishuai/ScaleBFM/abd6f17c02fe0baabc14709feb8d9ea4959aa621/ScaleTrack/source/scaletrack/scaletrack/assets/robots/g1_29dof/g1_29dof.xml"
+    },
+    "metadata": {
+      "path": "checkpoints/model_22200_tensorrt_metadata.json",
+      "sha256": "3024f18136314fade2676e22d6eafb1a8b2befa388da55b0885a53fcb1368d16",
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/compiled_checkpoint/humanoid_transformer_m/linux/model_22200_tensorrt_metadata.json"
+    },
+    "mode_table": {
+      "path": "checkpoints/mode_table.pt",
+      "sha256": "fca11f2399bced32517b51c7f9dcf13c97117ca469b0b32e207d8f7d664fbde9",
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/compiled_checkpoint/humanoid_transformer_m/linux/mode_table.pt"
+    }
+  },
+  "source_repository": "https://github.com/zengweishuai/ScaleBFM",
+  "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
+  "official": false
+}

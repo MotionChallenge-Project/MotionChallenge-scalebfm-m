@@ -1,0 +1,32 @@
+{
+  "model": "scalebfm-m",
+  "display_name": "ScaleBFM M",
+  "submitter": "MotionChallenge",
+  "submission_type": "maintainer reproduction, not author submission",
+  "upstream": "https://github.com/zengweishuai/ScaleBFM",
+  "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "author_inference_review": "160 matched-input cases and4 resets passed CPU original author network/export/ScaleBridge comparison on macOS. Linux and full-suite verification are separate.",
+  "inference_validation": "validation/native-parity.json",
+  "benchmark_physics": "shared G1 canonical profile, not author training simulator",
+  "checkpoint_origin": {
+    "author_release_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM",
+    "author_release_label": "Official ScaleBFM Hugging Face release",
+    "kind": "author_file",
+    "kind_label": "Author-released checkpoint",
+    "artifact_page_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/blob/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+    "download_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+    "original_filename": "checkpoint/humanoid_transformer_m/model_22200.pt",
+    "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+    "bytes": 72856655,
+    "verification": "Original raw PyTorch M checkpoint, strict actor/task-embedder loading. No conversion or modified weights; unrelated shared ONNX is not used."
+  },
+  "deployment": {
+    "backend": "Original author PyTorch network and export functions on CPU. TensorRT/CUDA equivalence is not implied. Author source and metadata are downloaded at pinned revisions with SHA256 validation.",
+    "mode": "Author default whole-body control mode7, reference_forcing=True. Reference root position is substituted only in observation buffers after initialization; simulator state is never changed.",
+    "history": "Three chronological frames, initialized by broadcasting actual initial state; zero last actions. Future reference offsets0..5 at50Hz.",
+    "reference": "Original author XML FK from canonical root/joint reference, input-only; no change to dataset or scoring.",
+    "initialization": "Core canonical initial state replaces author interactive calibration; same author reset history rules. First reference root/heading already align with initial actual root.",
+    "action": "Original float32 network PD targets and author gains. Core motor limits, failure and scoring unchanged."
+  }
+}
