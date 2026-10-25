@@ -33,7 +33,8 @@
     "native-sources.json": "830d97f529e02ce8ac5e0e1c7c4a575999057e9d0a06cb7b705695fc1ae63a90",
     "native_runtime.py": "30e7c4f8d91a97a823e5753332d3a193e60e7d9fafafcd23d502b5ec5d40e219",
     "policy.json": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
-    "validate_inference.py": "4c6572e1cf2ec7d4a848f518511c576bc23805a21af8f508d3374198feb60961"
+    "validate_inference.py": "4c6572e1cf2ec7d4a848f518511c576bc23805a21af8f508d3374198feb60961",
+    "parallel.py": "4c1e1e89b116d7418147225054f024d338971bf838f5f6d6c28ebecc741d013a"
   },
   "prior_native_parity_sha256": {
     "validation/native-parity.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23",
@@ -49,5 +50,10 @@
     "code": "validate_inference.py",
     "cases": 160,
     "resets": 4
+  },
+  "execution_validation": {
+    "path": "validation/concurrency.json",
+    "sha256": "70a03065b4c3e8e08585f881769399d223652c3f38026e93607ebb060114caa2",
+    "scope": "Native outputs, independent histories/RNG, reordered slots/partial resets and all40 two-second closed-loop exact comparison; does not replace full benchmark evidence."
   }
 }
