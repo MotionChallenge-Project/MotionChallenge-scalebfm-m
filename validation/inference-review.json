@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "cases": 160,
+  "resets": 4,
+  "max_abs_errors": {
+    "reference_fk_position": 0.0,
+    "reference_fk_rotation": 0.0,
+    "history": 0.0,
+    "observation": 0.0,
+    "action": 0.0,
+    "motor_target": 0.0
+  },
+  "tolerance": 2e-05,
+  "control_mode": 7,
+  "reference_forcing": true,
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
+  "adaptation": "Initialize root history from first reference root instead of simulator root; explicitly authorized benchmark adaptation, then retain author mode7 reference forcing.",
+  "scope": "Author ScaleBridge history/reset/observation and original export wrapper on CPU, raw original M weights; independent author-compatible float32 FK implementations; matched packets and independent action histories. TensorRT/CUDA numeric equivalence and full motion rollout remain separate.",
+  "review": {
+    "schema": "MotionChallenge/inference-review-v1",
+    "reviewed_at": "2026-10-27T07:41:40.030291+00:00",
+    "core_commit": "4bf520618f25f72d371117326edb01f4645eaa3f",
+    "base_adapter_commit": "77f42c568c5fb6d0b76789dbd43e13b2adbc2001",
+    "control_hz": 50.0,
+    "reference_offsets_s": [
+      0.0,
+      0.02,
+      0.04,
+      0.06,
+      0.08,
+      0.1
+    ],
+    "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+    "auxiliary_sha256": {
+      "network": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
+      "export": "cc95d2b63a211219b4e5f6911b6bf790c7a33754b81fc293c7f51c3b5e007154",
+      "robot": "3773fff8e969da20c9c76ad82666a08877be04f94676911d913f33e981149f4c",
+      "metadata": "3024f18136314fade2676e22d6eafb1a8b2befa388da55b0885a53fcb1368d16",
+      "mode_table": "fca11f2399bced32517b51c7f9dcf13c97117ca469b0b32e207d8f7d664fbde9"
+    },
+    "deployment_route": "Author ScaleBridge mode 7 with reference_forcing. The first reference root initializes history instead of measured global root; this disclosed benchmark adaptation is retained.",
+    "production_files_sha256": {
+      "adapter.py": "35b59cc046a5e38445d9912714dce53fe885137132d3615946b2ad3aa29de222",
+      "evaluate.py": "0ebb8c761f00dd963f2e45c85ecb94628273911bb1edfc0f2621e8fc458cb4ff",
+      "native_runtime.py": "30e7c4f8d91a97a823e5753332d3a193e60e7d9fafafcd23d502b5ec5d40e219",
+      "parallel.py": "4c1e1e89b116d7418147225054f024d338971bf838f5f6d6c28ebecc741d013a"
+    },
+    "inference_config_sha256": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
+    "comparison_script_sha256": "4c6572e1cf2ec7d4a848f518511c576bc23805a21af8f508d3374198feb60961",
+    "default_batch": {
+      "status": "passed",
+      "cases": 103,
+      "reset_slots": 20,
+      "max_command_abs_error": 0.0,
+      "exact": true,
+      "tolerance": 1e-05,
+      "wall_s": 6.295460309833288,
+      "checks": [
+        "default PolicyBatch array transport",
+        "1/3/8 active slots",
+        "reordered slots",
+        "independent partial resets and seeded RNG",
+        "reference endpoint clamping",
+        "all five motor command fields"
+      ],
+      "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3"
+    },
+    "restricted_access": {
+      "status": "passed",
+      "method": "Forbidden-state checks included in this fresh author hardware/deployment comparator",
+      "cases": 160,
+      "resets": 4
+    },
+    "default_batch_script_url": "https://github.com/MotionChallenge-Project/motionchallenge/blob/2ef7ecab3b3a06bb4a53fa137de2d7f9365d6b50/tools/check_adapter_inference.py",
+    "default_batch_script_sha256": "2cb7984c27f4bbca2355ed2e05b5a48ca2e5ceb865850e1b6f2445f06b594241",
+    "scope": "Matched-input inference, observation boundary, deployment configuration and default batch path. No benchmark rollouts or scores were changed."
+  }
+}
