@@ -1,0 +1,19 @@
+{
+  "model": "scalebfm-m",
+  "status": "passed",
+  "errors": [],
+  "core_commit": "2221fab60a90adc3c85b1dfd438e00244fb58263",
+  "runtime_sha256": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
+  "locked_environment_and_cli": true,
+  "own_core_import": "/mnt/volumes/nexus-train-bd-ga/swd/motionchallenge-mjwarp/MotionChallenge-scalebfm-m/MotionChallenge-Core/src/motion_challenge/__init__.py",
+  "admission_and_source_hashes": true,
+  "modules": [
+    "convert_weights",
+    "evaluate",
+    "native_network",
+    "native_runtime",
+    "tensor_adapter",
+    "tensor_native",
+    "tensor_policy"
+  ]
+}

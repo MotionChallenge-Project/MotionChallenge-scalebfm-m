@@ -1,0 +1,17 @@
+{
+  "status": "author_release_verified",
+  "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "author_release_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM",
+  "artifact_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+  "verification_scope": "Original file full SHA256 matches the author release; official project publication and pinned release metadata verified. Conversion and evaluation do not train or replace model weights.",
+  "origin_audit": "validation/origin-audit.json",
+  "original_files": [
+    {
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+      "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+      "bytes": 72856655,
+      "role": "author_original"
+    }
+  ],
+  "artifact_kind": "author_original_file"
+}

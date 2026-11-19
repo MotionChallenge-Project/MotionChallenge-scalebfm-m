@@ -1,0 +1,32 @@
+{
+  "status": "verified_author_release",
+  "eligible_for_official_leaderboard": true,
+  "author_repository": "https://github.com/zengweishuai/ScaleBFM",
+  "original_files": [
+    {
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/resolve/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+      "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+      "bytes": 72856655,
+      "role": "author_original"
+    }
+  ],
+  "official_release_evidence": [
+    {
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM",
+      "evidence": "Official model card lists checkpoint/humanoid_transformer_m/model_22200.pt."
+    },
+    {
+      "url": "https://huggingface.co/WeishuaiZeng/ScaleBFM/blob/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m/model_22200.pt",
+      "evidence": "Pinned author file LFS SHA256 matches the evaluated original PyTorch checkpoint."
+    }
+  ],
+  "conversion_only": true,
+  "runtime_sha256_unchanged": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
+  "inference_evidence": [
+    "validation/mjwarp-network-parity.json",
+    "validation/tensor-observation-parity.json",
+    "validation/full-batch-capacity.json"
+  ],
+  "same_learned_weight_family": "scalebfm-m",
+  "equivalence_evidence": "validation/deployment-export-equivalence.json"
+}

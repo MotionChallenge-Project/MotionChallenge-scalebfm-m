@@ -1,0 +1,60 @@
+{
+  "learned_parameter_tensors": 70,
+  "learned_parameter_count": 2996765,
+  "learned_parameters_identical": true,
+  "equal_state_tensors": 86,
+  "state_tensors_export": 88,
+  "state_tensors_M": 88,
+  "different_tensors": [
+    {
+      "key": "action_scale",
+      "shape_a": [
+        29
+      ],
+      "shape_b": [
+        1,
+        29
+      ],
+      "learned": false,
+      "max_abs": null
+    },
+    {
+      "key": "default_dof_pos",
+      "shape_a": [
+        29
+      ],
+      "shape_b": [
+        1,
+        29
+      ],
+      "learned": false,
+      "max_abs": null
+    }
+  ],
+  "missing_keys": [],
+  "metadata_equal": true,
+  "architecture": {
+    "prop_obs_dim": 64,
+    "task_obs_dim": 267,
+    "action_dim": 29,
+    "output_dim": 29,
+    "embedding_dim": 256,
+    "num_heads": 4,
+    "ff_dim": 256,
+    "num_layers": 4,
+    "reduced_task_dim": null,
+    "task_embedder_hidden_dims": []
+  },
+  "maximum_learned_weight_difference": 0.0,
+  "all_state_values_identical_after_flatten": true,
+  "status": "identical_learned_weights",
+  "learned_tensor_count_including_empty_embedding": 70,
+  "identical_learned_tensor_count": 70,
+  "learned_parameter_count_including_empty_embedding": 2996765,
+  "wrapper_named_parameter_tensor_count": 69,
+  "wrapper_named_parameter_count": 2996509,
+  "original_author_checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "third_party_export_sha256": "19628312a3fc6ff4c7f9e5ced5ec0739edef28fe52449d0127c1f9cc7eb6b25d",
+  "scope": "Learned tensor values and metadata equivalence. Deployment preprocessing and PD output paths are separately implemented; this is not a claim of identical complete controllers.",
+  "parameter_count_note": "The original actor has 2,928,157 parameters and its task embedder 68,608. The deployment wrapper registers the trained 256-value empty_embedding as a buffer, so its named_parameters listing omits that trained vector."
+}

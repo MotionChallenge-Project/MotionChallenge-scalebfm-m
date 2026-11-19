@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "source_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "max_abs_error": 1.1444091796875e-05,
+  "cases": [
+    {
+      "batch": 1,
+      "max_abs_error": 1.3709068298339844e-06
+    },
+    {
+      "batch": 7,
+      "max_abs_error": 4.664063453674316e-06
+    },
+    {
+      "batch": 40,
+      "max_abs_error": 1.1444091796875e-05
+    },
+    {
+      "batch": 256,
+      "max_abs_error": 1.1026859283447266e-05
+    }
+  ],
+  "reference": "Unmodified pinned author scalar CPU wrapper",
+  "files": {
+    "policy.safetensors": "00c826013e2115fb6e3c7c8972e9145aa019311bed9454ead9ba0a5782f877ae",
+    "metadata.json": "a838fe0269dd35b0481def335b669a9972c11dc08651aab060f7007e23c6ba06"
+  }
+}

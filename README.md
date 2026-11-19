@@ -1,25 +1,50 @@
-# ScaleBFM M
+# ScaleBFM-M
 
-[Author project](https://scalebfm.github.io/) · [Checkpoint](https://huggingface.co/WeishuaiZeng/ScaleBFM/tree/2eec74e0f326076a706702654168efc489ef604a/checkpoint/humanoid_transformer_m) · [Provenance](provenance.json)
+[Author repository](https://github.com/zengweishuai/ScaleBFM) · [Checkpoint provenance](provenance.json) · [Strict observation contract](admission.mjwarp.json)
 
-## Install and run
+## Install
 
 ```bash
 git clone --recurse-submodules https://github.com/MotionChallenge-Project/MotionChallenge-scalebfm-m.git
 cd MotionChallenge-scalebfm-m
-uv sync
-uv run evaluate.py
+uv sync --locked
 ```
 
-Produces success, completion and six MPBPE values in a verified `result.json`.
-MuJoCo 3.17 CPU batch; `--jobs` sets parallelism. Missing data, weights and pinned author
-inference files are downloaded and hash-checked; results and traces stay outside Git.
+Python 3.12 and an NVIDIA GPU are required. The repository pins Core, Python dependencies, source checkpoints, and auxiliary artifacts. Weights are converted locally to safetensors and executed as one PyTorch batch on the selected GPU.
 
-[Inference validation](validation/README.md) · [Native parity report](validation/native-parity.json)
+## Evaluate
 
-## Observations
+Download the original G1 LAFAN or BONES-SEED motions from the author. Pass the motion directory, or the original SEED `g1.tar.gz` archive:
 
-Ideal proprioception, without robot world-position or contact feedback. [Checkpoint requirements](admission.json) · [Rules](https://github.com/MotionChallenge-Project/MotionChallenge-Core/blob/da0aec4023bbc3d29be67e1fce9fa9ab8a48c4b5/docs/OBSERVATIONS.md).
+```bash
+uv run evaluate.py --dataset lafan --data /path/to/lafan --device cuda:0 --output runs/lafan
+uv run evaluate.py --dataset seed --data /path/to/g1.tar.gz --device cuda:0 --output runs/seed
+```
 
+The command downloads and checks model artifacts, converts weights, prepares reference poses, evaluates all motions, and independently recomputes scores from saved traces. Core applies the public SEED inclusion list. Users maintain their local motion files.
 
-Initialize root history from the first reference root position instead of measured robot position, which is unavailable under the benchmark observation rules. Then use the author mode 7 reference-forcing inference with the original checkpoint; no robot translation is measured or integrated.
+For local LeRobot v3 motions, add `--data-format lerobot-v3`. For downloaded model files, use `--weights /path/to/original-checkpoint`; auxiliary files use `--artifact NAME=/path/to/file`. `--offline` uses only supplied or cached artifacts. `--cache` selects the working cache.
+
+Batch size is the number of motions, capped at 4096. All active slots execute in one forward call; longest motions are scheduled first and completed slots are refilled. Use `--slots` to select an explicit capacity. The control interval is 20 ms with four 5 ms MuJoCo Warp steps, contact friction 1.0, Newton 50 iterations and 20 line-search iterations.
+
+## Model artifacts
+
+The source is the author's `model_22200.pt` checkpoint. The converter writes the Transformer state dictionary as safetensors and checks it against the pinned native inference wrapper. Five auxiliary artifacts are declared in `runtime.mjwarp.json`: `network`, `export`, `robot`, `metadata` and `mode_table`. The evaluator downloads them automatically; each can also be supplied with `--artifact NAME=/path/to/file`.
+
+[Author checkpoint provenance](validation/checkpoint-origin.json) records the official release, original artifact hashes and conversion scope.
+
+## Observations and verification
+
+The policy receives joint positions and velocities, root orientation and angular velocity. Actual global position and linear velocity are excluded from every observation and history frame. Motion references contain root and joint information; this adapter computes its own reference body features. Core precomputes reference FK before rollout and reads actual body poses from the simulator for scoring.
+
+- [Network conversion parity](validation/mjwarp-network-parity.json)
+- [Observation, history and reset parity](validation/tensor-observation-parity.json)
+- [Full 4096-slot inference](validation/full-batch-capacity.json)
+
+`validate_tensor.py --prepared PATH --weights CONVERTED --source ORIGINAL --artifact-map ARTIFACTS_JSON --device cuda:0` reproduces the observation check; the artifact map contains `{"artifacts": {"NAME": {"path": "PATH"}}}` for the five entries in `runtime.mjwarp.json`. `validate_full_batch.py --prepared PATH --weights CONVERTED --device cuda:0` uses the prepared motions and converted weights and validates full-batch execution against seven independently initialized slots. The one-command evaluator writes `result.json`, traces and an independent verification report under `--output`.
+
+[Current validation summary](VALIDATION.md) links the conversion, full-batch, complete dataset and independent-cache evidence.
+
+## License
+
+Adapter: [Apache-2.0](LICENSE). [Upstream notices and licenses](THIRD_PARTY_NOTICES.md). Checkpoint and dataset terms are specified by their authors.

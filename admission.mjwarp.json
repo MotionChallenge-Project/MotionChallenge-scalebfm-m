@@ -1,0 +1,29 @@
+{
+  "state_access": "proprioceptive-no-position-no-linear-velocity-v1",
+  "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "status": "inference_verified",
+  "policy_observations": [
+    "joint_position_rad",
+    "joint_velocity_rad_s",
+    "root_orientation_xyzw",
+    "root_angular_velocity_world_rad_s"
+  ],
+  "reference_access": "root-and-joint-only MotionReferenceBatch; model-owned kinematics",
+  "inference_batch": 4096,
+  "chunking": false,
+  "evidence_sha256": {
+    "validation/native-parity.json": "401838a203a24610eed88a02929ffa82fd90c09ce642824973f23fbb35bf5d23",
+    "validation/mjwarp-network-parity.json": "0a0fa971f6a49311cc1fe23e93f94a9763d2f0bc6987ee9316cb1e7d09014373",
+    "validation/tensor-observation-parity.json": "d453cbe61e204ae4b0ce9ff450088d727f24d3f93d304ecac85fbf284b8d5609",
+    "validation/full-batch-capacity.json": "6b5f82c326c78840f769863f0ad96ea2859dbe486d1fc50001187592fc6a0714",
+    "tensor_adapter.py": "212d4e3ce54d707cf8c48496000e830b72159383c9df895785e766d300288542",
+    "convert_weights.py": "31fd3d7ae0450076d85e1d42426375fb26742553b0e504b603429a77b56b8b95",
+    "tensor_policy.py": "46f1bb09c64e3c1b6419cc73aa0938f8359976442146a9fb985f589da1c6d402",
+    "tensor_native.py": "8af886eb93f50eb0d93a0652c58e0b284f30e4b710dc82f814e92731f9d1d3d4"
+  },
+  "evaluation_reports": {
+    "lafan": "validation/lafan-full.json",
+    "seed": "validation/seed-full.json",
+    "independent_cache_pipeline": "validation/clean-reproduction.json"
+  }
+}

@@ -1,14 +1,11 @@
 [project]
 name = "MotionChallenge-scalebfm-m"
-version = "0.1.0"
+version = "0.2.0"
 requires-python = ">=3.12,<3.13"
-dependencies = ["MotionChallenge-Core", "torch==2.14.1"]
+dependencies = ["MotionChallenge-Core"]
+
+[tool.uv]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
 
 [tool.uv.sources]
 motionchallenge-core = {path = "MotionChallenge-Core", editable = true}
-torch = [{index = "pytorch-cpu", marker = "sys_platform == 'linux'"}]
-
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true

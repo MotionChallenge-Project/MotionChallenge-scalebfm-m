@@ -1,14 +1,14 @@
 {
   "model": "scalebfm-m",
-  "display_name": "ScaleBFM M",
+  "display_name": "ScaleBFM M (official model_22200)",
   "submitter": "MotionChallenge",
   "submission_type": "MotionChallenge reproduction",
   "upstream": "https://github.com/zengweishuai/ScaleBFM",
   "source_commit": "abd6f17c02fe0baabc14709feb8d9ea4959aa621",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
-  "author_inference_review": "Numerical comparison against pinned author inference: validation/native-parity.json",
-  "inference_validation": "validation/native-parity.json",
-  "benchmark_physics": "Shared canonical G1 nominal physics and initialization.",
+  "author_inference_review": "Pinned original inference, tensor observation and 4096-slot parity reports in validation/.",
+  "inference_validation": "validation/mjwarp-network-parity.json",
+  "benchmark_physics": "MJWarp shared G1 protocol: 20 ms control, four 5 ms substeps, friction 1.0, Newton maximum 50 iterations.",
   "checkpoint_origin": {
     "author_release_url": "https://huggingface.co/WeishuaiZeng/ScaleBFM",
     "author_release_label": "Official ScaleBFM Hugging Face release",
@@ -19,18 +19,30 @@
     "original_filename": "checkpoint/humanoid_transformer_m/model_22200.pt",
     "sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
     "bytes": 72856655,
-    "verification": "Original raw PyTorch M checkpoint, strict actor/task-embedder loading. No conversion or modified weights; unrelated shared ONNX is not used."
+    "verification": "Pinned original author PyTorch checkpoint verified by full SHA256 and author LFS metadata. Strict native-wrapper versus batched-tensor parity passed."
   },
   "deployment": {
-    "backend": "Original author PyTorch network and export functions on CPU. TensorRT/CUDA equivalence is not implied. Author source and metadata are downloaded at pinned revisions with SHA256 validation.",
-    "mode": "Author whole-body control mode 7, reference_forcing=True; original checkpoint and export functions.",
-    "history": "Three chronological frames; root-position history starts from the first reference root, other history uses initial proprioception, and last actions start at zero. Six future reference frames at 50 Hz.",
-    "reference": "Original author XML and float32 quaternion FK operation order applied to canonical root/joint reference, input-only. No change to dataset or scoring.",
-    "initialization": "Benchmark adaptation: substitute the first reference root for measured robot root when initializing history, because robot world position is unavailable under the observation rules. Subsequent author reference forcing is unchanged; simulator reset remains canonical.",
-    "action": "Original float32 network PD targets and author gains. Core motor limits, failure and scoring unchanged."
+    "backend": "Batched PyTorch GPU inference from locally converted safetensors.",
+    "mode": "Whole-body mode 7; reference forcing uses reference root information.",
+    "history": "Three chronological frames and six reference frames at 50 Hz.",
+    "reference": "Author XML and float32 quaternion FK applied to root/joint motion references.",
+    "action": "Author wrapper PD targets and gain metadata; shared Core simulation and scoring."
   },
   "inference_validation_platforms": {
     "macOS": "validation/native-parity.json",
     "Linux": "validation/native-parity-linux.json"
-  }
+  },
+  "architecture": {
+    "name": "Humanoid Transformer",
+    "layers": 4,
+    "embedding_dim": 256,
+    "heads": 4,
+    "feed_forward_dim": 256,
+    "learned_parameters": 2996765,
+    "variant_label": "M",
+    "variant_label_expansion": "Not inferred; the reviewed author release documents the m and xl directory labels."
+  },
+  "official_weight_source": true,
+  "leaderboard_eligible": true,
+  "origin_audit": "validation/origin-audit.json"
 }

@@ -1,0 +1,66 @@
+{
+  "status": "independent_cache_pipeline_passed",
+  "dataset": "lafan",
+  "data_format": "original",
+  "clips": 40,
+  "source": "independent model directory copied from the working repository; separate installed Core dependency",
+  "cache_initial_state": "empty; original motions and original model checkpoints supplied explicitly",
+  "entrypoint": "evaluate.py",
+  "stages": [
+    "original artifact SHA256 verification",
+    "model-owned weight conversion",
+    "original motion preparation",
+    "full GPU batch rollout",
+    "independent CPU trace metric verification"
+  ],
+  "original_checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+  "result_sha256": "8b170a9f07fa8f25f473fdc01c5a01191eb058e52d94dba78af23af4c80d4730",
+  "runtime_sha256": "ad77c12c85ead79742e2bb6c0776886f605825e8013041c3dc98ea981738bf0c",
+  "frozen_runtime_sha256": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
+  "same_frozen_runtime_identity": false,
+  "conversion_receipt_sha256": "c90f222836bf38d2b62b9921556871af2ab7f89c4e013fb9467481563927ba9b",
+  "conversion_identity": {
+    "source_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
+    "converter": "convert_weights:prepare",
+    "model_code_sha256": {
+      "adapter.py": "35b59cc046a5e38445d9912714dce53fe885137132d3615946b2ad3aa29de222",
+      "native_network.py": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
+      "parallel.py": "4c1e1e89b116d7418147225054f024d338971bf838f5f6d6c28ebecc741d013a",
+      "native_runtime.py": "30e7c4f8d91a97a823e5753332d3a193e60e7d9fafafcd23d502b5ec5d40e219",
+      "convert_weights.py": "31fd3d7ae0450076d85e1d42426375fb26742553b0e504b603429a77b56b8b95",
+      "validate_tensor.py": "916a9f4ae348cb44a2dc7f0abcd56867e8e6245c34249666a48c8882ce276613",
+      "tensor_native.py": "8af886eb93f50eb0d93a0652c58e0b284f30e4b710dc82f814e92731f9d1d3d4",
+      "tensor_policy.py": "46f1bb09c64e3c1b6419cc73aa0938f8359976442146a9fb985f589da1c6d402",
+      "evaluate.py": "f89bd2cf0333e7f5639431d6976253da3ad6ef8d490340362f4b4630d533d071",
+      "validate_inference.py": "4c6572e1cf2ec7d4a848f518511c576bc23805a21af8f508d3374198feb60961",
+      "tensor_adapter.py": "212d4e3ce54d707cf8c48496000e830b72159383c9df895785e766d300288542",
+      "validate_full_batch.py": "5ac81683ebcaaa0693d20c73b127b28f64a91250588de70c2bc9002d269d12a4"
+    },
+    "common_code_sha256": {
+      "torch_graph.py": "6020028fdd1c1419af845ef99ed2c3b9ef493b8374a550a4885c709eb97106d5",
+      "__init__.py": "4c5f9916a01bd744eb9782d883d0d2d4acfc938528b418b689365516e43928df"
+    },
+    "configuration_sha256": "a8d4a72064e7e14a3889d28cf1f7a8d380501468f6d93cc2d9863b57f139e10f",
+    "tensor_configuration": {
+      "tensor_entrypoint": "tensor_adapter:TensorScaleBFM",
+      "tensor_conversion": "convert_weights:prepare"
+    },
+    "artifacts": {
+      "network": "0f09be3a6c5a7396ef7f28ea8a5365b9c723bb896eb4da71cc8809c840dccdec",
+      "export": "cc95d2b63a211219b4e5f6911b6bf790c7a33754b81fc293c7f51c3b5e007154",
+      "robot": "3773fff8e969da20c9c76ad82666a08877be04f94676911d913f33e981149f4c",
+      "metadata": "3024f18136314fade2676e22d6eafb1a8b2befa388da55b0885a53fcb1368d16",
+      "mode_table": "fca11f2399bced32517b51c7f9dcf13c97117ca469b0b32e207d8f7d664fbde9"
+    }
+  },
+  "verification": {
+    "verification": "independent_cpu_trace_recomputation_passed",
+    "clips": 40,
+    "verifier_sha256": "822098272459bd44d65eb365cb0df9a5f3492410f63ab11cf055669b3a52237a",
+    "max_metric_abs_error": 6.89601123426975e-09,
+    "result_sha256": "8b170a9f07fa8f25f473fdc01c5a01191eb058e52d94dba78af23af4c80d4730",
+    "scope": "Trace consistency only; a separate clean rerun is still required"
+  },
+  "numerical_reproduction_claim": false,
+  "scope": "Complete one-command pipeline with empty conversion/data cache. Identity differences are explicit; this report does not assert same-identity numerical reproduction."
+}

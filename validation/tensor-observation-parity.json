@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "steps": 15,
+  "batch": 7,
+  "partial_reset_slots": [
+    1,
+    5
+  ],
+  "observation_max_abs_error": 7.152557373046875e-07,
+  "action_max_abs_error": 3.337860107421875e-06,
+  "pd_target_max_abs_error_rad": 1.430511474609375e-06,
+  "reference": "Unmodified author reference FK, history and policy; matched action history"
+}
