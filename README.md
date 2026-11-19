@@ -48,3 +48,11 @@ The policy receives joint positions and velocities, root orientation and angular
 ## License
 
 Adapter: [Apache-2.0](LICENSE). [Upstream notices and licenses](THIRD_PARTY_NOTICES.md). Checkpoint and dataset terms are specified by their authors.
+
+BONES-SEED evaluation uses a feasibility-filtered subset of the original G1 motion data. Download the original archive; Core applies one public inclusion list of 129,561 motions shared by every model.
+
+<!-- current-evaluation-evidence -->
+
+## Current evaluation evidence
+
+[LAFAN1 full evaluation](validation/lafan-evaluation.json) · [BONES-SEED full evaluation](validation/seed-evaluation.json)
