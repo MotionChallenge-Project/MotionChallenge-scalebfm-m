@@ -2,7 +2,7 @@
   "model": "scalebfm-m",
   "status": "passed",
   "errors": [],
-  "core_commit": "2221fab60a90adc3c85b1dfd438e00244fb58263",
+  "core_commit": "e4cb035b9f95ec820c4a0384df1f4ebdcbc0abf4",
   "runtime_sha256": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
   "locked_environment_and_cli": true,
   "own_core_import": "/mnt/volumes/nexus-train-bd-ga/swd/motionchallenge-mjwarp/MotionChallenge-scalebfm-m/MotionChallenge-Core/src/motion_challenge/__init__.py",
