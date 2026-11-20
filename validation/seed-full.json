@@ -12,23 +12,23 @@
     "scope": "Trace consistency only; a separate clean rerun is still required"
   },
   "runtime_sha256": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
-  "protocol_sha256": "3900f88a933613534e896fcd6732fa19bde6ed772d36cad017b9cb7f0e8269b7",
+  "protocol_sha256": "55667e7ee930b0cab378f6cc911b82c1107482c8d242a4d48873845eb9c2d581",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
   "summary": {
     "success_count": 129298,
     "completion": 0.9988591689548301,
     "full": {
-      "mpjpe_world_m": 0.18300777740085106,
-      "mpjpe_xy_aligned_m": 0.03081140772136418,
-      "mpjpe_xy_yaw_aligned_m": 0.031211530660427138,
+      "mpkpe_world_m": 0.18300777740085106,
+      "mpkpe_xy_aligned_m": 0.03081140772136418,
+      "mpkpe_xy_yaw_aligned_m": 0.031211530660427138,
       "joint_mae_rad": 0.07795932907869073,
       "anchor_height_error_m": 0.011765035216641576,
       "anchor_gravity_z_error": 0.011192685358213977
     },
     "prefix": {
-      "mpjpe_world_m": 0.18270939015849252,
-      "mpjpe_xy_aligned_m": 0.030759293367180925,
-      "mpjpe_xy_yaw_aligned_m": 0.03115989137592568,
+      "mpkpe_world_m": 0.18270939015849252,
+      "mpkpe_xy_aligned_m": 0.030759293367180925,
+      "mpkpe_xy_yaw_aligned_m": 0.03115989137592568,
       "joint_mae_rad": 0.0779086477546428,
       "anchor_height_error_m": 0.011704521805078378,
       "anchor_gravity_z_error": 0.011110827479571695

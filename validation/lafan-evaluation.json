@@ -2,7 +2,7 @@
   "status": "full_rollout_and_independent_trace_verified",
   "dataset": "lafan",
   "protocol_id": "lafan-g1-29dof/mjwarp311/no-position-no-linear-velocity-v1",
-  "protocol_sha256": "940b7b6e059959c17f8ad092ccc7538d217a02f368fc9c00ad7c15f2b07713a9",
+  "protocol_sha256": "d573e641567550bddae48f987dfddbd44cff94cc8ff669613d91c6597d86bc32",
   "checkpoint_sha256": "88d5a79946c03ed25503f48b2af71d16290844ef066ca9b6c8fa8dc3837422e3",
   "runtime_sha256": "0fb8b30cda84c25d89aa4cde7ebf06845bcc414521113740c63774078adb7926",
   "source_sha256": {
@@ -159,17 +159,17 @@
     "success_count": 25,
     "completion": 0.7772103314432043,
     "full": {
-      "mpjpe_world_m": 1.6924310173966357,
-      "mpjpe_xy_aligned_m": 0.05485634846561693,
-      "mpjpe_xy_yaw_aligned_m": 0.05398062282552254,
+      "mpkpe_world_m": 1.6924310173966357,
+      "mpkpe_xy_aligned_m": 0.05485634846561693,
+      "mpkpe_xy_yaw_aligned_m": 0.05398062282552254,
       "joint_mae_rad": 0.12176879161691623,
       "anchor_height_error_m": 0.028349933769201786,
       "anchor_gravity_z_error": 0.0363317597158341
     },
     "prefix": {
-      "mpjpe_world_m": 1.256209508383844,
-      "mpjpe_xy_aligned_m": 0.0468975416409499,
-      "mpjpe_xy_yaw_aligned_m": 0.04657535981104244,
+      "mpkpe_world_m": 1.256209508383844,
+      "mpkpe_xy_aligned_m": 0.0468975416409499,
+      "mpkpe_xy_yaw_aligned_m": 0.04657535981104244,
       "joint_mae_rad": 0.11411578493292684,
       "anchor_height_error_m": 0.021124796674529458,
       "anchor_gravity_z_error": 0.024257662595213524
