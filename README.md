@@ -56,3 +56,7 @@ BONES-SEED evaluation uses a feasibility-filtered subset of the original G1 moti
 ## Current evaluation evidence
 
 [LAFAN1 full evaluation](validation/lafan-evaluation.json) · [BONES-SEED full evaluation](validation/seed-evaluation.json)
+
+## Metric
+
+MPJPE (Mean Per-Joint Position Error) measures the 3D Euclidean distance between actual and reference keypoint positions. The protocol defines these keypoints at robot body-frame origins: 14 points for G1. Errors are averaged over keypoints and scoring samples within each motion, then motions are weighted equally. Results report full-motion and first-failure-prefix scores with no alignment, XY alignment, and XY + yaw alignment. XY alignment removes pelvis horizontal translation while retaining height error. Leaderboard values are reported in millimetres (mm).
